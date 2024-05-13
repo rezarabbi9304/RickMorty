@@ -3,6 +3,7 @@ package com.dentonstudio.rickandmorty.data.remote.repository
 import com.dentonstudio.rickandmorty.data.remote.CharacterApi
 import com.dentonstudio.rickandmorty.data.remote.dto.CharacterItemDto
 import com.dentonstudio.rickandmorty.domain.model.CharacterItem
+import com.dentonstudio.rickandmorty.domain.model.Episode
 import com.dentonstudio.rickandmorty.domain.model.Result
 import com.dentonstudio.rickandmorty.domain.repository.CharacterRepository
 import com.dentonstudio.rickandmorty.util.Resource
@@ -44,5 +45,24 @@ class repositoryImp @Inject constructor (
                 message = "We found ${Ex}"
             ))
         }
+    }
+
+    override suspend fun getEpisodeDetails(id: String): Flow<Resource<List<Episode>>> = flow{
+        emit(Resource.Loading())
+
+        try {
+
+
+            val payLoad = api.getEpisodeDetails(id+",0").map { it.toEpisode() }
+            emit(Resource.Success(
+                data = payLoad
+            ))
+
+        }catch (Ex:HttpException){
+            emit(Resource.Error(
+                message = "something went wrong${Ex}"
+            ))
+        }
+
     }
 }

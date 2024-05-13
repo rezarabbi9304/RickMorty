@@ -10,9 +10,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.dentonstudio.rickandmorty.presentation.CharacterDetails.CharacterDetailsScreen
 import com.dentonstudio.rickandmorty.presentation.CharacterScreen
 import com.dentonstudio.rickandmorty.presentation.component.HomeViewModel
@@ -36,11 +38,22 @@ class MainActivity : ComponentActivity() {
                 ) {
                     NavHost(navController = navController, startDestination = "Home") {
                         composable(route = "Home") {
-                            CharacterScreen()
+                            CharacterScreen(
+                                navController = navController
+                            )
                         }
 
-                        composable(route = "CharacterDetails") {
-                            CharacterDetailsScreen()
+                        composable(route = "CharacterDetails"+
+                                "?CharacterId={CharacterId}",
+                            arguments = listOf(
+                                navArgument(
+                                    name = "CharacterId"
+                                ){
+                                    type  = NavType.IntType
+                                    defaultValue = -1
+                                }
+                            )) {
+                            CharacterDetailsScreen( navController = navController)
                         }
                     }
 

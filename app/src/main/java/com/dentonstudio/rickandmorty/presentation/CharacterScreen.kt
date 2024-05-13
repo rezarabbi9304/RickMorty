@@ -23,13 +23,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.dentonstudio.rickandmorty.R
 import com.dentonstudio.rickandmorty.presentation.component.HomeViewModel
 import com.dentonstudio.rickandmorty.presentation.component.ItemScreen
+import com.dentonstudio.rickandmorty.util.GifScreen
 
 @Composable()
 fun CharacterScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    navController:NavController
 ) {
 
     Column(modifier = Modifier
@@ -57,25 +60,25 @@ fun CharacterScreen(
 
         }
 
-        if(viewModel.state.value.isLoading){
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1f)
-            )
-        }
+
 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
 
         ){
+            item {    if(viewModel.state.value.isLoading){
+                GifScreen()
+            } }
                 items(viewModel.state.value.allCharacter.results.size){it->
                         val charachter = viewModel.state.value.allCharacter.results[it]
                     Spacer(modifier = Modifier.height(8.dp))
 
                     ItemScreen(
-                        charachter
+                        charachter,
+                        onClick = {
+                            navController.navigate("CharacterDetails"+"?CharacterId=${it}")
+                        }
                     )
 
 

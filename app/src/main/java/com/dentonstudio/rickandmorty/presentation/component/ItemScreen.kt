@@ -1,6 +1,7 @@
 package com.dentonstudio.rickandmorty.presentation.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,10 +36,12 @@ import com.dentonstudio.rickandmorty.domain.model.Result
 import kotlin.math.round
 
 @Composable
-fun ItemScreen(charachter: Result) {
+fun ItemScreen(charachter: Result,
+onClick:(id:Int)->Unit) {
     Box (modifier = Modifier
         .fillMaxWidth()
         .clip(RoundedCornerShape(15.dp))
+        .clickable { onClick(charachter.id) }
         .background(Color(0xFF3C3E44))){
         Row (modifier = Modifier.fillMaxSize(),
             ){

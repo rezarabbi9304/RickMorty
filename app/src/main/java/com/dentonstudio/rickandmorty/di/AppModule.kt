@@ -4,6 +4,7 @@ import com.dentonstudio.rickandmorty.data.remote.CharacterApi
 import com.dentonstudio.rickandmorty.data.remote.repository.repositoryImp
 import com.dentonstudio.rickandmorty.domain.repository.CharacterRepository
 import com.dentonstudio.rickandmorty.domain.use_case.GetCharacterDetailsCase
+import com.dentonstudio.rickandmorty.domain.use_case.GetEpisodeCase
 import com.dentonstudio.rickandmorty.domain.use_case.getCharacterCase
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -58,4 +59,11 @@ class AppModule {
     fun provideCharacterDetailsCase(repository: CharacterRepository): GetCharacterDetailsCase {
         return  GetCharacterDetailsCase(repository)
     }
+
+    @Provides
+    @Singleton
+    fun provideEpisodeCase(repository: CharacterRepository): GetEpisodeCase {
+        return  GetEpisodeCase(repository)
+    }
+
 }
