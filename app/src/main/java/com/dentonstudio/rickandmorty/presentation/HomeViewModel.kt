@@ -34,7 +34,9 @@ class HomeViewModel @Inject constructor(
                 when (resource) {
                     is Resource.Error -> {
 
-                        Log.d("Error", ": " + resource.message)
+                        _state.value = state.value.copy(
+                            isLoading = true
+                        )
 
                     }
 

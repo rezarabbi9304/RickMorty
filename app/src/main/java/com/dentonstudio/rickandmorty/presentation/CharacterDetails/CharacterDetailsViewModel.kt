@@ -83,7 +83,12 @@ class CharacterDetailsViewModel @Inject constructor(
         viewModelScope.launch {
             episodeUseCase.invoke(episodeIds).onEach {result->
                 when(result){
-                    is Resource.Error ->{}
+                    is Resource.Error ->{
+                        _stateEpisodes.value = stateEpisode.value.copy(
+                            isLoading = true
+                        )
+
+                    }
                     is Resource.Loading ->{
                         _stateEpisodes.value = stateEpisode.value.copy(
                             isLoading = true

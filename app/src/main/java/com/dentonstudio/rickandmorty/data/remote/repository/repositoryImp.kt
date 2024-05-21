@@ -9,6 +9,7 @@ import com.dentonstudio.rickandmorty.domain.repository.CharacterRepository
 import com.dentonstudio.rickandmorty.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import okio.IOException
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -23,6 +24,10 @@ class repositoryImp @Inject constructor (
             val characterData = api.getCharacter()
             emit(Resource.Success(data = characterData.toCharacterItem()))
         }catch (ex:HttpException){
+            emit(Resource.Error(
+                message = "this is wrong ${ex}"
+            ))
+        }catch (ex:IOException){
             emit(Resource.Error(
                 message = "this is wrong ${ex}"
             ))
@@ -43,6 +48,10 @@ class repositoryImp @Inject constructor (
         }catch (Ex:HttpException){
             emit(Resource.Error(
                 message = "We found ${Ex}"
+            ))
+        }catch (ex:IOException){
+            emit(Resource.Error(
+                message = "this is wrong ${ex}"
             ))
         }
     }
